@@ -1,6 +1,6 @@
 <div align="center">
 
-# Respona
+# Respona - Voice Agent Prototype
 
 ### The phone rings. The kitchen keeps moving.
 
