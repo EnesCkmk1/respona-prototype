@@ -25,26 +25,30 @@ const lines = [
 ] as const;
 
 type PlaybackState = "idle" | "playing" | "paused" | "done";
-
-function getDanishVoice() {
-  const voices = window.speechSynthesis.getVoices();
-  return voices.find((voice) => voice.lang.toLowerCase().startsWith("da"));
-}
+const audioFiles = [
+  "01-ai.mp3",
+  "02-guest.mp3",
+  "03-ai.mp3",
+  "04-guest.mp3",
+  "05-ai.mp3",
+];
 
 export function ConversationDemo() {
   const [state, setState] = useState<PlaybackState>("idle");
   const [activeIndex, setActiveIndex] = useState(-1);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const audio = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     return () => {
       if (timer.current) clearTimeout(timer.current);
-      window.speechSynthesis.cancel();
+      audio.current?.pause();
+      audio.current = null;
     };
   }, []);
 
   function playFrom(startIndex: number) {
-    window.speechSynthesis.cancel();
+    audio.current?.pause();
     if (timer.current) clearTimeout(timer.current);
     let index = startIndex;
     setState("playing");
@@ -55,20 +59,15 @@ export function ConversationDemo() {
         setActiveIndex(lines.length - 1);
         return;
       }
-      const line = lines[index];
       setActiveIndex(index);
-      const utterance = new SpeechSynthesisUtterance(line.text);
-      utterance.lang = "da-DK";
-      utterance.rate = line.speaker === "AI-agent" ? 0.94 : 1;
-      utterance.pitch = line.speaker === "AI-agent" ? 1.04 : 0.98;
-      const voice = getDanishVoice();
-      if (voice) utterance.voice = voice;
-      utterance.onend = () => {
+      const player = new Audio(`./audio/${audioFiles[index]}`);
+      audio.current = player;
+      player.onended = () => {
         index += 1;
         timer.current = setTimeout(speakNext, 280);
       };
-      utterance.onerror = () => setState("idle");
-      window.speechSynthesis.speak(utterance);
+      player.onerror = () => setState("idle");
+      void player.play().catch(() => setState("idle"));
     };
 
     speakNext();
@@ -76,12 +75,12 @@ export function ConversationDemo() {
 
   function togglePlayback() {
     if (state === "playing") {
-      window.speechSynthesis.pause();
+      audio.current?.pause();
       setState("paused");
       return;
     }
     if (state === "paused") {
-      window.speechSynthesis.resume();
+      void audio.current?.play();
       setState("playing");
       return;
     }
@@ -89,7 +88,7 @@ export function ConversationDemo() {
   }
 
   function reset() {
-    window.speechSynthesis.cancel();
+    audio.current?.pause();
     if (timer.current) clearTimeout(timer.current);
     setActiveIndex(-1);
     setState("idle");
@@ -119,8 +118,8 @@ export function ConversationDemo() {
             Hør hvordan samtalen føles.
           </h2>
           <p className="mt-4 max-w-md leading-relaxed text-site-muted">
-            En syntetisk dansk samtale mellem agent og restaurantgæst. Tryk
-            afspil for at høre hele flowet og se dialogen blive fremhævet.
+            En indtalt dansk samtale mellem agent og restaurantgæst. Tryk afspil
+            for at høre hele flowet og se dialogen blive fremhævet.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <button
@@ -142,8 +141,7 @@ export function ConversationDemo() {
             </button>
           </div>
           <p className="mt-4 flex items-center gap-2 text-xs text-site-muted">
-            <Volume2 size={14} /> Bruger browserens danske stemme, hvis den er
-            tilgængelig.
+            <Volume2 size={14} /> To separate danske stemmer · Ingen API-nøgle
           </p>
         </div>
 
