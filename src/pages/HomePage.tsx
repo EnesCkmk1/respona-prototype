@@ -1,6 +1,9 @@
 import {
   ArrowRight,
+  Braces,
+  Database,
   Phone,
+  ShieldCheck,
   UtensilsCrossed,
   LayoutDashboard,
 } from "lucide-react";
@@ -20,6 +23,26 @@ const features = [
     icon: UtensilsCrossed,
     title: "Menuen under kontrol",
     text: "Se retter og priser, og slå tilgængelighed til eller fra direkte i dashboardet.",
+  },
+];
+const technicalLayers = [
+  {
+    icon: Braces,
+    label: "Frontend",
+    title: "React + TypeScript",
+    text: "Komponentbaseret UI med lokale state transitions, hash routing og tilgængelige controls.",
+  },
+  {
+    icon: Database,
+    label: "Dataflow",
+    title: "Deterministiske fixtures",
+    text: "Fiktive ordre- og menudata gør prototypen reproducerbar uden API-nøgler eller database.",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Drift",
+    title: "Statisk og sikkert",
+    text: "Vite bundle på GitHub Pages. Ingen secrets, kontaktdata, lyd eller personoplysninger i buildet.",
   },
 ];
 export default function HomePage() {
@@ -122,6 +145,56 @@ export default function HomePage() {
               ændringer bliver kun i hukommelsen; temaet gemmes lokalt i
               browseren.
             </p>
+          </div>
+        </section>
+        <section
+          className="border-y border-site-border bg-site-surface py-20 md:py-24"
+          aria-labelledby="technical-title"
+        >
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="site-label mb-3">Teknisk fundament</p>
+                <h2
+                  id="technical-title"
+                  className="text-3xl font-extrabold tracking-tight sm:text-4xl"
+                >
+                  En prototype med en tydelig vej til produktion.
+                </h2>
+              </div>
+              <p className="max-w-md text-sm leading-relaxed text-site-muted">
+                Grænsefladen er isoleret, så næste skridt kan kobles på uden at
+                ændre produktoplevelsen.
+              </p>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {technicalLayers.map(({ icon: Icon, label, title, text }) => (
+                <article
+                  key={title}
+                  className="rounded-2xl border border-site-border p-6"
+                >
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="rounded-lg bg-site-accent/10 p-2 text-site-accent">
+                      <Icon size={19} />
+                    </span>
+                    <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em] text-site-muted">
+                      {label}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 font-bold">{title}</h3>
+                  <p className="text-sm leading-relaxed text-site-muted">
+                    {text}
+                  </p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-8 overflow-x-auto rounded-2xl border border-site-border bg-[#191622] p-5 font-mono text-xs leading-7 text-white/80">
+              <span className="text-emerald-300">call</span> →{" "}
+              <span className="text-violet-300">speech-to-text</span> →{" "}
+              <span className="text-sky-300">intent + tools</span> →{" "}
+              <span className="text-amber-300">order state</span> →{" "}
+              <span className="text-rose-300">kitchen dashboard</span>
+            </div>
           </div>
         </section>
       </main>

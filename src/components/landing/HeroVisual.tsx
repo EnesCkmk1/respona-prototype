@@ -2,7 +2,7 @@ import { Phone, Radio } from "lucide-react";
 
 export function HeroVisual() {
   return (
-    <div className="hero-visual relative mx-auto aspect-square max-w-sm sm:max-w-md lg:max-w-none">
+    <div className="hero-visual relative mx-auto aspect-square w-full min-w-72 max-w-sm sm:max-w-md lg:max-w-none">
       <div className="hero-ring hero-ring-1" aria-hidden />
       <div className="hero-ring hero-ring-2" aria-hidden />
       <div className="hero-ring hero-ring-3" aria-hidden />
