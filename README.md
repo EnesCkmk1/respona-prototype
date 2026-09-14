@@ -28,6 +28,7 @@ This repository showcases the product interface with synthetic data. It does not
 - **Order dashboard** — inspect line items, totals and notes; filter by status; move orders from new to preparing, ready and collected.
 - **Menu management** — browse categories and toggle item availability.
 - **Restaurant settings** — view a sample restaurant profile, agent persona and opening hours.
+- **Playable conversation** — listen to a short Danish AI ↔ guest exchange through the browser's built-in speech synthesis.
 - **Light and dark themes** — responsive layouts for desktop and mobile.
 
 ![Restaurant dashboard](docs/dashboard.png)
@@ -66,7 +67,7 @@ The public source contains only the prototype: reusable dashboard components, de
 
 ## Scope
 
-Voice recognition, language-model reasoning, speech synthesis, telephony, authentication and persistent storage are outside this frontend demo. Agent indicators illustrate the concept and do not report a connected service.
+Voice recognition, language-model reasoning, telephony, authentication and persistent storage are outside this frontend demo. The conversation player uses local browser speech synthesis for a realistic, zero-API demo; it does not call a voice provider. Agent indicators illustrate the concept and do not report a connected service.
 
 ## License
 

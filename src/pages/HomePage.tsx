@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import { HeroVisual } from "../components/landing/HeroVisual";
+import { ConversationDemo } from "../components/ConversationDemo";
 const features = [
   {
     icon: Phone,
@@ -132,6 +133,7 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+        <ConversationDemo />
         <section className="mx-auto max-w-6xl px-6 pb-20 md:pb-24">
           <div className="rounded-3xl border border-site-border bg-site-soft p-8 md:p-10">
             <p className="site-label mb-3">Prototype scope</p>
